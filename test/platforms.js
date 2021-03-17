@@ -1,6 +1,6 @@
 require("should")
-var platforms = require("../lib/utils/platforms")
-var useragent = require("express-useragent")
+const platforms = require("../lib/utils/platforms")
+const useragent = require("express-useragent")
 
 describe("Platforms", function () {
   describe("Detect", function () {
@@ -23,13 +23,13 @@ describe("Platforms", function () {
 
     it("should detect windows_64", function () {
       platforms.detect("MyApp-x64.exe").should.be.exactly(platforms.WINDOWS_64)
-      var chrome = useragent.parse(
+      const chrome = useragent.parse(
         "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
       )
       platforms
         .detectPlatformByUserAgent(chrome)
         .should.be.exactly(platforms.WINDOWS_64)
-      var edge = useragent.parse(
+      const edge = useragent.parse(
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586",
       )
       platforms
@@ -78,7 +78,7 @@ describe("Platforms", function () {
   })
 
   describe("Resolve", function () {
-    var version = {
+    const version = {
       platforms: [
         {
           type: "osx_64",

@@ -1,23 +1,23 @@
-var express = require("express")
-var uuid = require("uuid")
-var basicAuth = require("basic-auth")
-var Analytics = require("analytics-node")
-var nuts = require("../")
+const express = require("express")
+const uuid = require("uuid")
+const basicAuth = require("basic-auth")
+const Analytics = require("analytics-node")
+const nuts = require("../")
 
-var app = express()
+const app = express()
 
-var apiAuth = {
+const apiAuth = {
   username: process.env.API_USERNAME,
   password: process.env.API_PASSWORD,
 }
 
-var analytics = undefined
-var downloadEvent = process.env.ANALYTICS_EVENT_DOWNLOAD || "download"
+let analytics = undefined
+const downloadEvent = process.env.ANALYTICS_EVENT_DOWNLOAD || "download"
 if (process.env.ANALYTICS_TOKEN) {
   analytics = new Analytics(process.env.ANALYTICS_TOKEN)
 }
 
-var myNuts = nuts.Nuts({
+const myNuts = nuts.Nuts({
   repository: process.env.GITHUB_REPO,
   token: process.env.GITHUB_TOKEN,
   endpoint: process.env.GITHUB_ENDPOINT,
@@ -30,14 +30,15 @@ var myNuts = nuts.Nuts({
 })
 
 // Control access to API
-myNuts.before("api", function (access, next) {
+myNuts.before("api", (access, next) => {
+  console.log("hey before")
   if (!apiAuth.username) return next()
 
   function unauthorized() {
     next(new Error("Invalid username/password for API"))
   }
 
-  var user = basicAuth(access.req)
+  const user = basicAuth(access.req)
   if (!user || !user.name || !user.pass) {
     return unauthorized()
   }
@@ -51,6 +52,7 @@ myNuts.before("api", function (access, next) {
 
 // Log download
 myNuts.before("download", function (download, next) {
+  console.log("hey before")
   console.log(
     "download",
     download.platform.filename,
@@ -78,7 +80,7 @@ myNuts.after("download", function (download, next) {
 
   // Track on segment if enabled
   if (analytics) {
-    var userId = download.req.query.user
+    const userId = download.req.query.user
 
     analytics.track({
       event: downloadEvent,
@@ -98,7 +100,7 @@ myNuts.after("download", function (download, next) {
 
 if (process.env.TRUST_PROXY) {
   try {
-    var trustProxyObject = JSON.parse(process.env.TRUST_PROXY)
+    const trustProxyObject = JSON.parse(process.env.TRUST_PROXY)
     app.set("trust proxy", trustProxyObject)
   } catch (e) {
     app.set("trust proxy", process.env.TRUST_PROXY)
@@ -112,20 +114,20 @@ app.use(function (req, res, next) {
   res.status(404).send("Page not found")
 })
 app.use(function (err, req, res, next) {
-  var msg = err.message || err
-  var code = 500
+  const msg = err.message || err
+  const code = 500
 
   console.error(err.stack || err)
 
   // Return error
   res.format({
-    "text/plain": function () {
+    "text/plain": () => {
       res.status(code).send(msg)
     },
-    "text/html": function () {
+    "text/html": () => {
       res.status(code).send(msg)
     },
-    "application/json": function () {
+    "application/json": () => {
       res.status(code).send({
         error: msg,
         code: code,
@@ -136,13 +138,12 @@ app.use(function (err, req, res, next) {
 
 myNuts
   .init()
-
   // Start the HTTP server
   .then(
-    function () {
-      var server = app.listen(process.env.PORT || 5000, function () {
-        var host = server.address().address
-        var port = server.address().port
+    () => {
+      const server = app.listen(process.env.PORT || 5000, () => {
+        const host = server.address().address
+        const port = server.address().port
 
         console.log("Listening at http://%s:%s", host, port)
       })
