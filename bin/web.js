@@ -53,6 +53,7 @@ var https_options = {
 var myNuts = nuts.Nuts({
     repository: process.env.GITHUB_REPO,
     token: process.env.GITHUB_TOKEN,
+    endpoint: process.env.GITHUB_ENDPOINT,
     username: process.env.GITHUB_USERNAME,
     password: process.env.GITHUB_PASSWORD,
     timeout: process.env.VERSIONS_TIMEOUT,
