@@ -20,6 +20,7 @@ if (process.env.ANALYTICS_TOKEN) {
 var myNuts = nuts.Nuts({
     repository: process.env.GITHUB_REPO,
     token: process.env.GITHUB_TOKEN,
+    endpoint: process.env.GITHUB_ENDPOINT,
     username: process.env.GITHUB_USERNAME,
     password: process.env.GITHUB_PASSWORD,
     timeout: process.env.VERSIONS_TIMEOUT,
@@ -78,7 +79,13 @@ myNuts.after('download', function(download, next) {
 });
 
 if (process.env.TRUST_PROXY) {
-  app.set('trust proxy', process.env.TRUST_PROXY);
+    try {
+        var trustProxyObject = JSON.parse(process.env.TRUST_PROXY);
+        app.set('trust proxy', trustProxyObject);
+    }
+    catch (e) {
+        app.set('trust proxy', process.env.TRUST_PROXY);
+    }
 }
 
 app.use(myNuts.router);
