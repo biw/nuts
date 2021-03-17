@@ -17,7 +17,8 @@ if (process.env.ANALYTICS_TOKEN) {
   analytics = new Analytics(process.env.ANALYTICS_TOKEN)
 }
 
-const myNuts = nuts.Nuts({
+var myNuts = nuts.Nuts({
+  routePrefix: process.env.ROUTE_PREFIX,
   repository: process.env.GITHUB_REPO,
   token: process.env.GITHUB_TOKEN,
   endpoint: process.env.GITHUB_ENDPOINT,
