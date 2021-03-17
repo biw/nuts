@@ -35,7 +35,7 @@ myNuts.before("api", (access, next) => {
   console.log("hey before")
   if (!apiAuth.username) return next()
 
-  function unauthorized() {
+  const unauthorized = () => {
     next(new Error("Invalid username/password for API"))
   }
 
@@ -52,7 +52,7 @@ myNuts.before("api", (access, next) => {
 })
 
 // Log download
-myNuts.before("download", function (download, next) {
+myNuts.before("download", (download, next) => {
   console.log("hey before")
   console.log(
     "download",
@@ -67,7 +67,7 @@ myNuts.before("download", function (download, next) {
 
   next()
 })
-myNuts.after("download", function (download, next) {
+myNuts.after("download", (download, next) => {
   console.log(
     "downloaded",
     download.platform.filename,
@@ -111,10 +111,10 @@ if (process.env.TRUST_PROXY) {
 app.use(myNuts.router)
 
 // Error handling
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.status(404).send("Page not found")
 })
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   const msg = err.message || err
   const code = 500
 
@@ -149,7 +149,7 @@ myNuts
         console.log("Listening at http://%s:%s", host, port)
       })
     },
-    function (err) {
+    (err) => {
       console.log(err.stack || err)
       process.exit(1)
     },
