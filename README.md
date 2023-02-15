@@ -20,7 +20,8 @@ Nuts is a simple (and smart) application to serve desktop-application releases.
 It uses GitHub as a backend to store assets, and it can easily be deployed as a stateless service. It supports GitHub private repositories (useful to store releases of a closed-source application available on GitHub).
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FdrkNsubuga%2Fnuts-release-server&env=GITHUB_TOKEN,GITHUB_REPO&envDescription=ID%20for%20the%20GitHub%20repository&envLink=https%3A%2F%2Fbiw.github.io%2Fnuts%2Fdeploy&project-name=nuts-release-server&repository-name=nuts-release-server)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FdrkNsubuga%2Fnuts-release-server&env=GITHUB_TOKEN,GITHUB_REPO&envDescription=Details%20for%20the%20GitHub%20repository%20with%20the%20application&envLink=https%3A%2F%2Fbiw.github.io%2Fnuts%2Fdeploy&project-name=nuts-release-server&repository-name=nuts-release-server)
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
 
