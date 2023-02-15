@@ -1,0 +1,5 @@
+services:
+  - type: web # valid values: https://render.com/docs/yaml-spec#type
+    name: nuts-server
+    env: docker # valid values: https://render.com/docs/yaml-spec#environment
+    numInstances: 1
