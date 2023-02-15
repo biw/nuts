@@ -2,4 +2,5 @@ services:
   - type: web # valid values: https://render.com/docs/yaml-spec#type
     name: nuts-server
     env: docker # valid values: https://render.com/docs/yaml-spec#environment
+    plan: free # optional; defaults to starter
     numInstances: 1
